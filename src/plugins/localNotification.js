@@ -1,109 +1,125 @@
+// install   :  cordova plugin add de.appplant.cordova.plugin.local-notification
+// link      :  https://github.com/katzer/cordova-plugin-local-notifications/
+
 angular.module('ngCordova.plugins.localNotification', [])
 
-.factory('$cordovaLocalNotification', ['$q',
-    function ($q) {
+  .factory('$cordovaLocalNotification', ['$q', '$window', function ($q, $window) {
 
-        return {
-            add: function (options, scope) {
-                var q = $q.defer();
-                window.plugin.notification.local.add(
-                    options,
-                    function (result) {
-                        q.resolve(result);
-                    },
-                    scope);
-                return q.promise;
-            },
+    return {
+      add: function (options, scope) {
+        var q = $q.defer();
+        $window.plugin.notification.local.add(
+          options,
+          function (result) {
+            q.resolve(result);
+          },
+          scope);
+        return q.promise;
+      },
 
-            cancel: function (id, scope) {
-                var q = $q.defer();
-                window.plugin.notification.local.cancel(
-                    id, function (result) {
-                        q.resolve(result);
-                    }, scope);
+      cancel: function (id, scope) {
+        var q = $q.defer();
+        $window.plugin.notification.local.cancel(
+          id, function (result) {
+            q.resolve(result);
+          }, scope);
 
-                return q.promise;
-            },
+        return q.promise;
+      },
 
-            cancelAll: function (scope) {
-                var q = $q.defer();
+      cancelAll: function (scope) {
+        var q = $q.defer();
 
-                window.plugin.notification.local.cancelAll(
-                    function (result) {
-                        q.resolve(result);
-                    }, scope);
+        $window.plugin.notification.local.cancelAll(
+          function (result) {
+            q.resolve(result);
+          }, scope);
 
-                return q.promise;
-            },
+        return q.promise;
+      },
 
-            isScheduled: function (id, scope) {
-                var q = $q.defer();
+      isScheduled: function (id, scope) {
+        var q = $q.defer();
 
-                window.plugin.notification.local.isScheduled(
-                    id,
-                    function (result) {
-                        q.resolve(result);
-                    }, scope);
+        $window.plugin.notification.local.isScheduled(
+          id,
+          function (result) {
+            q.resolve(result);
+          }, scope);
 
-                return q.promise;
-            },
+        return q.promise;
+      },
 
-            getScheduledIds: function (scope) {
-                var q = $q.defer();
+      hasPermission: function (scope) {
+        var q = $q.defer();
 
-                window.plugin.notification.local.getScheduledIds(
-                    function (result) {
-                        q.resolve(result);
-                    }, scope);
+        $window.plugin.notification.local.hasPermission(
+          function (badge) {
+            q.resolve(badge);
+          }, scope);
 
-                return q.promise;
-            },
+        return q.promise;
+      },
 
-            isTriggered: function (id, scope) {
-                var q = $q.defer();
+      promptForPermission: function () {
+        $window.plugin.notification.local.promptForPermission();
+      },
 
-                window.plugin.notification.local.isTriggered(
-                    id, function (result) {
-                        q.resolve(result);
-                    }, scope);
+      getScheduledIds: function (scope) {
+        var q = $q.defer();
 
-                return q.promise;
-            },
+        $window.plugin.notification.local.getScheduledIds(
+          function (result) {
+            q.resolve(result);
+          }, scope);
 
-            getTriggeredIds: function (scope) {
-                var q = $q.defer();
+        return q.promise;
+      },
 
-                window.plugin.notification.local.getTriggeredIds(
-                    function (result) {
-                        q.resolve(result);
-                    }, scope);
+      isTriggered: function (id, scope) {
+        var q = $q.defer();
 
-                return q.promise;
-            },
+        $window.plugin.notification.local.isTriggered(
+          id, function (result) {
+            q.resolve(result);
+          }, scope);
 
-            getDefaults: function () {
-                return window.plugin.notification.local.getDefaults();
-            },
+        return q.promise;
+      },
 
-            setDefaults: function (Object) {
-                window.plugin.notification.local.setDefaults(Object);
-            },
+      getTriggeredIds: function (scope) {
+        var q = $q.defer();
 
-            onadd: function () {
-                return window.plugin.notification.local.onadd;
-            },
+        $window.plugin.notification.local.getTriggeredIds(
+          function (result) {
+            q.resolve(result);
+          }, scope);
 
-            ontrigger: function () {
-                return window.plugin.notification.local.ontrigger;
-            },
+        return q.promise;
+      },
 
-            onclick: function () {
-                return window.plugin.notification.local.onclick;
-            },
+      getDefaults: function () {
+        return $window.plugin.notification.local.getDefaults();
+      },
 
-            oncancel: function () {
-                return window.plugin.notification.local.oncancel;
-            }
-        }
-    }
-]);
+      setDefaults: function (Object) {
+        $window.plugin.notification.local.setDefaults(Object);
+      },
+
+      onadd: function () {
+        return $window.plugin.notification.local.onadd;
+      },
+
+      ontrigger: function () {
+        return $window.plugin.notification.local.ontrigger;
+      },
+
+      onclick: function () {
+        return $window.plugin.notification.local.onclick;
+      },
+
+      oncancel: function () {
+        return $window.plugin.notification.local.oncancel;
+      }
+    };
+  }]);

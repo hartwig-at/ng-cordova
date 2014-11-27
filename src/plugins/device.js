@@ -1,10 +1,13 @@
+// install   :     cordova plugin add org.apache.cordova.device
+// link      :     https://github.com/apache/cordova-plugin-device/blob/master/doc/index.md
+
 angular.module('ngCordova.plugins.device', [])
 
 .factory('$cordovaDevice', ['$q', function ($q) {
 
   var readyDeferred = $q.defer();
   document.addEventListener('deviceready', function () { readyDeferred.resolve(); }, false);
-  
+
   return {
     getDevice: function () {
       return device;
